@@ -10,7 +10,8 @@ h2{
 
 h3{
     font-size: 15px;
-    margin-top: 5px;
+    margin-top: 25px;
+
 }
 
 .button {
@@ -35,7 +36,7 @@ h3{
 #context {
 	float: left;
 	width: 70%;
-	height: 600px;
+	height: 660px;
     margin-left: 5px;
 	background-image:url('old_mathematics.png');
 }
@@ -77,5 +78,5 @@ h3{
 }
 
 #cp-setting{
-    margin: 30px 0;
+    margin: 10px 0;
 }

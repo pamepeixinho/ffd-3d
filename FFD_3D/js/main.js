@@ -1,6 +1,6 @@
 //FFD using three.js
 //Author: Jans Margevics 2012
-//TODO 
+
 $(function() {
 	var plane;
 	var camera, controls, scene, projector;
@@ -18,6 +18,7 @@ $(function() {
 	var loader;
     var geometry;
     var material;
+    var color;
     var modelObj;
     var scale = 1.0;
 	for (i = 0; i <= cpNum; ++i) {
@@ -68,17 +69,9 @@ $(function() {
             var reader = new FileReader(); //create reader
 
             reader.onload = function() { //attach onload
-                //do something with the result
-                // console.log("HERE bla");
-                // console.log(reader.result);
-                // localStorage.object = reader.result; //saved to localStorage
-                console.log("HERE 1");
                 parse = true;
-                // console.log(parse);
                 modelObj = reader.result;
-                // console.log(modelObj);
                 resetMesh();
-                // createImg(localStorage.img); //retrieved from localStorage
             };
 
             console.log("HERE 2");
@@ -93,6 +86,7 @@ $(function() {
             var value = $('#obj-select').val();
             meshName = 'obj/' + value + '.obj';
             parse = false;
+            modelObj = null;
             resetMesh();
         });
 
@@ -102,7 +96,9 @@ $(function() {
 
 		$("#saveObj").click( function (event){
            console.log("save");
-            var exporter = new THREE.saveGeometryToObj(currentMesh.geometry);
+            if (currentMesh.geometry != null){
+                var exporter = new THREE.saveGeometryToObj(currentMesh.geometry);
+            }
 		});
 
 		$( "#cpSlider" ).slider({
@@ -118,6 +114,14 @@ $(function() {
         });
 
 	    $("#amount").val($("#cpSlider").slider("value"));
+
+        $('#colorpickerHolder').ColorPicker({
+            flat: true,
+            livePreview:true,
+            onChange: function(hsb, hex, rgb) {
+                currentMesh.material.color = new THREE.Color( "0x" + hex );
+            }
+        });
 	}
 
 
@@ -258,9 +262,7 @@ $(function() {
         if (!parse){
             loader.load( meshName );
         } else{
-            console.log("parse");
             loadingModel(loader.parse( modelObj ));
-            console.log("parse2");
         }
 	}
 
@@ -512,6 +514,12 @@ $(function() {
         }
 
         console.log(s);
+
+        var blob = new Blob([s], {
+            type: "text/plain;charset=utf-8;",
+        });
+        saveAs(blob, "modifiedModel.obj");
+
         return s;
     }
 });

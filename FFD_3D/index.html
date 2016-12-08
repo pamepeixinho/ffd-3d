@@ -7,6 +7,7 @@
 
 	<link href="css/flick/jquery-ui-1.9.1.custom.css" rel="stylesheet">
 	<link href="css/additional.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/colorpicker.css" type="text/css" />
 
     <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -16,7 +17,11 @@
 	<script src="js/jquery-ui-1.9.1.custom.js"></script>
 	<script src="js/three.min.js"></script>
 
+    <script type="text/javascript" src="js/colorpicker.js"></script>
+    <script type="text/javascript" src="js/eye.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
 	<script src="js/OBJLoader.js"></script>
+    <script src="js/FileSaver.js"></script>
     <script src="js/OBJExporter.js"></script>
 	<script src="js/TrackballControls.js"></script>
 	<script src="js/main.js"></script>
@@ -52,7 +57,7 @@
             </div>
 
             <h3> Save deformed Object: </h3>
-			<div><button id="saveObj" class="button">Save</button></div>
+			<div><button id="saveObj" class="button">Download</button></div>
 		</div>
 		<h2 class="title-lattice"> FFD lattice settings</h2>
 		<div id="cp-setting">
@@ -63,8 +68,10 @@
 
 			<div id="cpSlider"></div>
 		</div>
-		<h3>Other settings</h3>
+		<h2>Other settings</h2>
 		<div><button class="button" id="reset">Reset mesh</button></div>
+        <h3>Custom color of model.</h3>
+             <p id="colorpickerHolder"></p>
     </div>
         </div>
         <div id="context"></div>
