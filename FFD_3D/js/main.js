@@ -20,6 +20,7 @@ $(function() {
     var material;
     var color;
     var modelObj;
+    var twoD = false;
     var scale = 1.0;
 	for (i = 0; i <= cpNum; ++i) {
 		controlPoints[i] = new Array ();
@@ -82,6 +83,17 @@ $(function() {
 
 		$(".button").button();
 
+        var icons = {
+            header: "ui-icon-circle-arrow-e",
+            activeHeader: "ui-icon-circle-arrow-s"
+        };
+
+        $("#accordion").accordion({
+            heightStyle: "content",
+            icons: icons,
+            collapsible: true
+        });
+
         $("#obj-select").change(function() {
             var value = $('#obj-select').val();
             meshName = 'obj/' + value + '.obj';
@@ -122,14 +134,32 @@ $(function() {
                 currentMesh.material.color = new THREE.Color( "0x" + hex );
             }
         });
-	}
+
+        $("#wire, #solid").change(function () {
+            if ($("#wire").is(":checked")) {
+                currentMesh.material.wireframe = true;
+            }
+            else if ($("#solid").is(":checked")) {
+                currentMesh.material.wireframe = false;
+            }
+        });
+
+        // $("#3D").accordion({
+        //     heightStyle: "content",
+        //     icons: icons,
+        //     collapsible: true
+        // });
+
+        // var active = $( ".selector" ).accordion( "option", "active" );
+
+    }
 
 
 	function init() {
 		renderer.setSize(clientWidth, clientHeight );
 		$('#context').append(renderer.domElement);
 		
-		camera = new THREE.PerspectiveCamera( 60, clientWidth/clientHeight, 0.1, 1000 );
+		camera = new THREE.PerspectiveCamera( 60, clientWidth/clientHeight, 1, 1000 );
 		camera.position.z = 190;
 
 		controls = new THREE.TrackballControls( camera, $('#context')[0] );
@@ -140,8 +170,11 @@ $(function() {
 		plane.visible = true;
 		scene.add( plane );
 
+        // console.log("text = " + texture);
+
 		geometry = new THREE.CylinderGeometry( 0, 40, 130, 10, 10 );
-		material =  new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading } );
+		material =  new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading, wireframe:false} );
+
 		geometry.computeBoundingBox();
 		loader = new THREE.OBJLoader();
 
@@ -182,6 +215,10 @@ $(function() {
         currentMesh = object.children[0];
         currentMesh.geometry.computeBoundingBox();
         console.log(currentMesh);
+
+        console.log("tload2");
+
+
         findScaleToObject();
 
         scene.add( object );
@@ -224,7 +261,7 @@ $(function() {
             camera.fov = 80;
         }
 
-        camera.zoom = 0;
+        // camera.zoom = 0;
         camera.updateProjectionMatrix();
 
         console.log("scale = " + scale);
@@ -320,7 +357,7 @@ $(function() {
 		uAxis.setZ(axis.z);		
 
 		var cubeG = new THREE.CubeGeometry(1,1,1); 
-		var material2 = new THREE.MeshBasicMaterial({color: 0x000000});
+		var material2 = new THREE.MeshBasicMaterial({color: 0x0C4600});
 
 		//Positioning vertices along the stu axis. pos = (origin + (ijk) / control points number) * axis vector
 		var cp = 0;
@@ -419,7 +456,7 @@ $(function() {
 		mouse.x = ( (event.clientX - $('#context')[0].offsetLeft) / $('#context')[0].offsetWidth  ) * 2 - 1;
 		mouse.y = -( (event.clientY - $('#context')[0].offsetTop) / $('#context')[0].offsetHeight  ) * 2 + 1;
 		
-		var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+		var vector = new THREE.Vector3( mouse.x, mouse.y, 0.00000001 );
 		projector.unprojectVector( vector, camera );
 		var ray = new THREE.Ray( camera.position, vector.subSelf( camera.position ).normalize() );
 
@@ -463,7 +500,7 @@ $(function() {
 		mouse.x = ( (event.clientX - $('#context')[0].offsetLeft) / $('#context')[0].offsetWidth  ) * 2 - 1;
 		mouse.y = -( (event.clientY - $('#context')[0].offsetTop) / $('#context')[0].offsetHeight  ) * 2 + 1;
 		
-		var vector = new THREE.Vector3( mouse.x, mouse.y, 0.5 );
+		var vector = new THREE.Vector3( mouse.x, mouse.y, 0.00000001 );
 		projector.unprojectVector( vector, camera );
 		var ray = new THREE.Ray( camera.position, vector.subSelf( camera.position ).normalize() );
 		

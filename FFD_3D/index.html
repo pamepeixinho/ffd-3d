@@ -28,51 +28,77 @@
 	
 	
 	
-<body>
-	<div id="controls">
-		<div>
-		<h2>Model settings</h2>
-		<div class="model-settings">
-            <h3>Load 3D object model:</h3>
-            <div id="select-model">
-                <p> Upload a 3D object (*.obj only) </p>
-                <form enctype="multipart/form-data" class="uploadFile">
-                    <input id="file" type="file"/>
-                </form>
+    <body>
+        <div id="controls">
+            <div id="accordion">
+                <h2>3D</h2>
+                <div id="3D" style="display: block;background: #eeeeee;">
+                    <h2>Model settings</h2>
+                    <div>
+                        <div class="model-settings">
+                            <h3>Load 3D object model:</h3>
+                            <div id="select-model">
+                                <p> Upload a 3D object (*.obj only) </p>
+                                <form enctype="multipart/form-data" class="uploadFile">
+                                    <input id="file" type="file"/>
+                                </form>
 
-                <p> Load one system 3D object </p>
-                <select id="obj-select">
-                    <option value="teste">Avatar Head</option>
-                    <option value="monkey">Monkey</option>
-                    <option value="bunny">Bunny</option>
-                    <option value="cube">Cube</option>
-                    <option value="teapot">Teapot</option>
-                    <option value="Deer">Deer</option>
-                    <option value="pyramid">Pyramid</option>
-                    <option value="sphere">Sphere</option>
-                    <option value="iphone_6_model">iPhone 6</option>
-                    <option value="dragon">Dragon</option>
-                    <option value="ladybird">Ladybird</option>
-                </select>
+                                <p> Load one system 3D object </p>
+                                <select id="obj-select">
+                                    <option value="avahead" selected="selected">Avatar Head</option>
+                                    <option value="monkey">Monkey</option>
+                                    <option value="bunny">Bunny</option>
+                                    <option value="cube">Cube</option>
+                                    <option value="teapot">Teapot</option>
+                                    <option value="Deer">Deer</option>
+                                    <option value="pyramid">Pyramid</option>
+                                    <option value="sphere">Sphere</option>
+                                    <option value="iphone_6_model">iPhone 6</option>
+                                    <option value="dragon">Dragon</option>
+                                    <option value="ladybird">Ladybird</option>
+                                </select>
+                            </div>
+
+                            <h3> Save deformed Object: </h3>
+                            <div><button id="saveObj" class="button">Download</button></div>
+
+                            <h3>Choose material to Model</h3>
+                            <form>
+                                <div id='type'>
+                                    <input type='radio' id='solid' name='type' value='solid' checked="checked"/>
+                                    <label for="solid">Solid</label>
+                                    <input type='radio' id='wire' name='type' value='wireframe' />
+                                    <label for="wire">Wireframe</label>
+                                </div>
+                            </form>
+
+                            <h3>Custom color of model.</h3>
+                            <p id="colorpickerHolder"></p>
+
+
+                        </div>
+                    </div>
+
+                    <h2 class="title-lattice"> FFD lattice settings</h2>
+                    <div>
+                        <div id="cp-setting">
+                            <p>
+                                Number of control points
+                                <input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+                            </p>
+
+                            <div id="cpSlider"></div>
+                        </div>
+                    </div>
+
+                    <h2>Other settings</h2>
+                    <div>
+                        <div><button class="button" id="reset">Reset mesh</button></div>
+                    </div>
+                </div>
+                <h2>2D</h2>
+                <div id="2D"></div>
             </div>
-
-            <h3> Save deformed Object: </h3>
-			<div><button id="saveObj" class="button">Download</button></div>
-		</div>
-		<h2 class="title-lattice"> FFD lattice settings</h2>
-		<div id="cp-setting">
-			<p>
-				Number of control points
-				<input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
-			</p>
-
-			<div id="cpSlider"></div>
-		</div>
-		<h2>Other settings</h2>
-		<div><button class="button" id="reset">Reset mesh</button></div>
-        <h3>Custom color of model.</h3>
-             <p id="colorpickerHolder"></p>
-    </div>
         </div>
         <div id="context"></div>
     </body>

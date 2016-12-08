@@ -5,13 +5,14 @@ body {
 }
 
 h2{
-     font-size: 18px;
+    font-size: 18px;
+    margin: 0;
+    color: #f6931f;
  }
 
 h3{
     font-size: 15px;
-    margin-top: 25px;
-
+    color: #646464;
 }
 
 .button {
@@ -26,7 +27,7 @@ h3{
 }
 
 #controls {
-	padding: 5px;
+	padding-right: 5px;
 	float: left;
 	width: auto;
 	height: auto;
@@ -45,6 +46,7 @@ h3{
     width: 30px;
     margin-left: 35px;
     text-align: center;
+    background-color: #ffffff;
 }
 
 #cpSlider{
@@ -74,9 +76,23 @@ h3{
 }
 
 .title-lattice{
-    margin-top: 40px;
+    margin-top: 220px;
 }
 
 #cp-setting{
     margin: 10px 0;
+}
+
+#accordion{
+    padding: 0 !important;
+    width: 352px;
+}
+
+#3D{
+   background-color: #cccccc !important;
+}
+
+#colorpickerHolder{
+    display: block;
+    margin-bottom:10px;
 }
