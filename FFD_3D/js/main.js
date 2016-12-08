@@ -12,15 +12,17 @@ $(function() {
 	var draggable = [];
 	var verts0 = [];
 	var loaded = false;
-	var meshName = "obj/avahead.obj";
+	var meshName = "obj/sphere.obj";
 	var object;
     var parse = false;
 	var loader;
     var geometry;
+    var emptyTexture;
     var material;
     var color;
     var textured = false;
     var modelObj;
+    var teste = false;
     var twoD = false;
     var scale = 1.0;
 	for (i = 0; i <= cpNum; ++i) {
@@ -62,9 +64,11 @@ $(function() {
 
 	init();
 	animate();
+    removeTexture();
 
 	function initControls() {
 
+        emptyTexture = THREE.ImageUtils.loadTexture("images/moon.gif");
         var fileInput = document.getElementById('file');
 
         fileInput.addEventListener('change', function(e) {
@@ -163,26 +167,34 @@ $(function() {
                 }
                 textured = true;
                 texture = reader.result;
-                currentMesh.material.map = THREE.ImageUtils.loadTexture(texture);
-                currentMesh.material.needsUpdate = true;
+                // new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading, wireframe:false} );
+                var mMap = THREE.ImageUtils.loadTexture(texture, undefined, function () {
+                    material.map = mMap;
+                    currentMesh.material = material;
+                    currentMesh.material.overdraw = 0.5;
+                    currentMesh.material.needsUpdate = true;
+                });
+
             };
 
-            console.log("HERE 2");
             modelObj = e.target.files[0];
             reader.readAsDataURL(modelObj); //trigger onload function
-            console.log("HERE 3");
         });
 
         $("#removeText").click( function (event){
-            currentMesh.material.map = null;
-            currentMesh.material.needsUpdate = true;
+            removeTexture();
         });
-        // $("body").($("body")[0].scrollHeight);
 
+        // $("body").($("body")[0].scrollHeight);
         // var active = $( ".selector" ).accordion( "option", "active" );
 
     }
 
+    function removeTexture() {
+        currentMesh.material.map = undefined;
+        currentMesh.material.needsUpdate = true;
+        currentMesh.needsUpdate = true;
+    }
 
 	function init() {
 		renderer.setSize(clientWidth, clientHeight );
@@ -200,7 +212,8 @@ $(function() {
 		scene.add( plane );
 
 		geometry = new THREE.CylinderGeometry( 0, 40, 130, 10, 10 );
-		material =  new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading, wireframe:false} );
+		material =  new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading, wireframe:false,
+            map: emptyTexture} );
 
 		geometry.computeBoundingBox();
 		loader = new THREE.OBJLoader();
@@ -254,15 +267,6 @@ $(function() {
             verts0.push(object.children[0].geometry.vertices[i]);
 
         loaded = true;
-
-        // if (textured == true && meshName != null &&
-        //     ( (meshName.substring(4,meshName.length-4) == "avahead") ||
-        //     (meshName.substring(4,meshName.length-4) == "monkey") ||
-        //     (meshName.substring(4,meshName.length-4) == "bunny") ||
-        //     (meshName.substring(4,meshName.length-4) == "teapot") ||
-        //     (meshName.substring(4,meshName.length-4) == "dragon") ) ){
-        //     alert("It's not possible load texture with this 3D object. Please choose another");
-        // }
     }
 
 	function findScaleToObject(){
