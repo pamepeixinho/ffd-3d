@@ -20,7 +20,6 @@ $(function() {
     var material;
     var color;
     var textured = false;
-    var texture;
     var modelObj;
     var twoD = false;
     var scale = 1.0;
@@ -174,9 +173,10 @@ $(function() {
             console.log("HERE 3");
         });
 
-        // currentMesh.material.map = THREE.ImageUtils.loadTexture('images/slider.png');
-        // currentMesh.material.needsUpdate = true;
-
+        $("#removeText").click( function (event){
+            // currentMesh.material.map = null;
+        });
+        // $("body").($("body")[0].scrollHeight);
 
         // var active = $( ".selector" ).accordion( "option", "active" );
 
@@ -254,14 +254,14 @@ $(function() {
 
         loaded = true;
 
-        if (textured == true && meshName != null &&
-            ( (meshName.substring(4,meshName.length-4) == "avahead") ||
-            (meshName.substring(4,meshName.length-4) == "monkey") ||
-            (meshName.substring(4,meshName.length-4) == "bunny") ||
-            (meshName.substring(4,meshName.length-4) == "teapot") ||
-            (meshName.substring(4,meshName.length-4) == "dragon") ) ){
-            alert("It's not possible load texture with this 3D object. Please choose another");
-        }
+        // if (textured == true && meshName != null &&
+        //     ( (meshName.substring(4,meshName.length-4) == "avahead") ||
+        //     (meshName.substring(4,meshName.length-4) == "monkey") ||
+        //     (meshName.substring(4,meshName.length-4) == "bunny") ||
+        //     (meshName.substring(4,meshName.length-4) == "teapot") ||
+        //     (meshName.substring(4,meshName.length-4) == "dragon") ) ){
+        //     alert("It's not possible load texture with this 3D object. Please choose another");
+        // }
     }
 
 	function findScaleToObject(){
