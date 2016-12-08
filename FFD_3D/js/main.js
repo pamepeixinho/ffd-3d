@@ -174,7 +174,8 @@ $(function() {
         });
 
         $("#removeText").click( function (event){
-            // currentMesh.material.map = null;
+            currentMesh.material.map = null;
+            currentMesh.material.needsUpdate = true;
         });
         // $("body").($("body")[0].scrollHeight);
 
