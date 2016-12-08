@@ -24,6 +24,9 @@ $(function() {
     var modelObj;
     var teste = false;
     var twoD = false;
+    var mesh1 = null;
+    var mesh2 = null;
+    var loadZ = 1;
     var scale = 1.0;
 	for (i = 0; i <= cpNum; ++i) {
 		controlPoints[i] = new Array ();
@@ -66,7 +69,15 @@ $(function() {
 	animate();
     removeTexture();
 
-	function initControls() {
+    function initWithSystemImage() {
+        var value = $('#obj-select').val();
+        meshName = 'obj/' + value + '.obj';
+        parse = false;
+        modelObj = null;
+        resetMesh();
+    }
+
+    function initControls() {
 
         emptyTexture = THREE.ImageUtils.loadTexture("images/moon.gif");
         var fileInput = document.getElementById('file');
@@ -80,10 +91,8 @@ $(function() {
                 resetMesh();
             };
 
-            console.log("HERE 2");
             modelObj = e.target.files[0];
             reader.readAsText(modelObj); //trigger onload function
-            console.log("HERE 3");
         });
 
 		$(".button").button();
@@ -100,12 +109,7 @@ $(function() {
         });
 
         $("#obj-select").change(function() {
-            // if
-            var value = $('#obj-select').val();
-            meshName = 'obj/' + value + '.obj';
-            parse = false;
-            modelObj = null;
-            resetMesh();
+            initWithSystemImage();
         });
 
         $("#reset").click( function (event){
@@ -185,8 +189,37 @@ $(function() {
             removeTexture();
         });
 
-        // $("body").($("body")[0].scrollHeight);
-        // var active = $( ".selector" ).accordion( "option", "active" );
+        $('#accordion').bind('accordionchange',
+            function() {
+                if ($(this).accordion('option', 'active') == 0 ){
+                    if (mesh1 == null){
+                        initWithSystemImage();
+                    } else {
+                        currentMesh = mesh1;
+                        loadZ = 1;
+                        resetMesh();
+                        lattice.geometry.verticesNeedUpdate = true;
+                        deformMesh();
+                    }
+                    mesh2 = currentMesh;
+                } else if ($(this).accordion('option', 'active') == 1){
+                    console.log("1");
+                    if (mesh2 == null){
+                        // console.log("1.1");
+                        meshName = 'obj/cube.obj';
+                        // loadZ = 0;
+                        resetMesh();
+                        // lattice.geometry.verticesNeedUpdate = true;
+                        // deformMesh();
+                    } else {
+                        console.log("1.2");
+                        currentMesh = mesh2;
+                    }
+                }
+
+                currentMesh.needsUpdate = true;
+                // alert('Active tab index: ' + $(this).accordion('option', 'active'))
+        });
 
     }
 
@@ -259,7 +292,13 @@ $(function() {
         findScaleToObject();
 
         scene.add( object );
-        initCPoints();
+
+        // if (loadZ == true){
+        initCPoints(loadZ);
+        // } else{
+        //     initCPoints(0);
+        // }
+
         generateLattice();
 
         //Storing initial array of vertices
@@ -384,7 +423,7 @@ $(function() {
 		scene.add( lattice );
 	}
 
-	function initCPoints() {
+	function initCPoints(vz) {
 		//getting the axis origin
 		origin = currentMesh.geometry.boundingBox.min;
 		axis.sub(currentMesh.geometry.boundingBox.max, currentMesh.geometry.boundingBox.min);
@@ -404,7 +443,7 @@ $(function() {
 	      		for (var k = 0; k <= cpNum; ++k){
 					controlPoints[cp].setX( origin.x + ((i/cpNum) * axis.x) );
 					controlPoints[cp].setY( origin.y + ((j/cpNum) * axis.y) );
-					controlPoints[cp].setZ( origin.z + ((k/cpNum) * axis.z) );
+					controlPoints[cp].setZ( (vz != 0) ? origin.z + ((k/cpNum) * axis.z) : 0);
 					
 					var cube = new THREE.Mesh(cubeG, material2);
 					cube.position.x = controlPoints[cp].x;
