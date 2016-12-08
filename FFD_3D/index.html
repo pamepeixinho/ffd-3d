@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+
+	<title>FFD WebGL</title>
+
+	<link href="css/flick/jquery-ui-1.9.1.custom.css" rel="stylesheet">
+	<link href="css/additional.css" rel="stylesheet">
+
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
+
+	<script src="js/jquery-1.8.2.js"></script>
+	<script src="js/jquery-ui-1.9.1.custom.js"></script>
+	<script src="js/three.min.js"></script>
+
+	<script src="js/OBJLoader.js"></script>
+    <script src="js/OBJExporter.js"></script>
+	<script src="js/TrackballControls.js"></script>
+	<script src="js/main.js"></script>
+	
+	
+	
+<body>
+	<div id="controls">
+		<div>
+		<h2>Model settings</h2>
+		<div class="model-settings">
+            <h3>Load 3D object model:</h3>
+            <div id="select-model">
+                <p> Upload a 3D object (*.obj only) </p>
+                <form enctype="multipart/form-data" class="uploadFile">
+                    <input id="file" type="file"/>
+                </form>
+
+                <p> Load one system 3D object </p>
+                <select id="obj-select">
+                    <option value="teste">Avatar Head</option>
+                    <option value="monkey">Monkey</option>
+                    <option value="bunny">Bunny</option>
+                    <option value="cube">Cube</option>
+                    <option value="teapot">Teapot</option>
+                    <option value="Deer">Deer</option>
+                    <option value="pyramid">Pyramid</option>
+                    <option value="sphere">Sphere</option>
+                    <option value="iphone_6_model">iPhone 6</option>
+                    <option value="dragon">Dragon</option>
+                    <option value="ladybird">Ladybird</option>
+                </select>
+            </div>
+
+            <h3> Save deformed Object: </h3>
+			<div><button id="saveObj" class="button">Save</button></div>
+		</div>
+		<h2 class="title-lattice"> FFD lattice settings</h2>
+		<div id="cp-setting">
+			<p>
+				Number of control points
+				<input type="text" id="amount" style="border: 0; color: #f6931f; font-weight: bold;" />
+			</p>
+
+			<div id="cpSlider"></div>
+		</div>
+		<h3>Other settings</h3>
+		<div><button class="button" id="reset">Reset mesh</button></div>
+    </div>
+        </div>
+        <div id="context"></div>
+    </body>
+</html>
