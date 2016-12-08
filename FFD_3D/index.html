@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>FFD WebGL</title>
+	<title>Free Form Deformation (3D)</title>
 
 	<link href="css/flick/jquery-ui-1.9.1.custom.css" rel="stylesheet">
 	<link href="css/additional.css" rel="stylesheet">
@@ -75,6 +75,12 @@
                             <h3>Custom color of model.</h3>
                             <p id="colorpickerHolder"></p>
 
+                            <h3> Upload Image to Texture </h3>
+                            <p> Note: texture don't work with all 3D models!</p>
+                            <p>(Try with Ladybug/Sphere/etc..)</p>
+                            <form id="formImg" enctype="multipart/form-data" class="uploadFile">
+                                <input id="textImg" type="file"/>
+                            </form>
 
                         </div>
                     </div>

@@ -19,6 +19,8 @@ $(function() {
     var geometry;
     var material;
     var color;
+    var textured = false;
+    var texture;
     var modelObj;
     var twoD = false;
     var scale = 1.0;
@@ -95,6 +97,7 @@ $(function() {
         });
 
         $("#obj-select").change(function() {
+            // if
             var value = $('#obj-select').val();
             meshName = 'obj/' + value + '.obj';
             parse = false;
@@ -144,11 +147,36 @@ $(function() {
             }
         });
 
-        // $("#3D").accordion({
-        //     heightStyle: "content",
-        //     icons: icons,
-        //     collapsible: true
-        // });
+        var textInput = document.getElementById('formImg');
+
+        textInput.addEventListener('change', function(e) {
+            var reader = new FileReader(); //create reader
+
+            reader.onload = function() { //attach onload
+
+                if (!parse && meshName != null &&
+                    ( (meshName.substring(4,meshName.length-4) == "avahead") ||
+                    (meshName.substring(4,meshName.length-4) == "monkey") ||
+                    (meshName.substring(4,meshName.length-4) == "bunny") ||
+                    (meshName.substring(4,meshName.length-4) == "teapot") ||
+                    (meshName.substring(4,meshName.length-4) == "dragon") ) ){
+                    alert("It's not possible load texture with this 3D object. Please choose another");
+                }
+                textured = true;
+                texture = reader.result;
+                currentMesh.material.map = THREE.ImageUtils.loadTexture(texture);
+                currentMesh.material.needsUpdate = true;
+            };
+
+            console.log("HERE 2");
+            modelObj = e.target.files[0];
+            reader.readAsDataURL(modelObj); //trigger onload function
+            console.log("HERE 3");
+        });
+
+        // currentMesh.material.map = THREE.ImageUtils.loadTexture('images/slider.png');
+        // currentMesh.material.needsUpdate = true;
+
 
         // var active = $( ".selector" ).accordion( "option", "active" );
 
@@ -159,7 +187,7 @@ $(function() {
 		renderer.setSize(clientWidth, clientHeight );
 		$('#context').append(renderer.domElement);
 		
-		camera = new THREE.PerspectiveCamera( 60, clientWidth/clientHeight, 1, 1000 );
+		camera = new THREE.PerspectiveCamera( 60, clientWidth/clientHeight, 1, 10000 );
 		camera.position.z = 190;
 
 		controls = new THREE.TrackballControls( camera, $('#context')[0] );
@@ -169,8 +197,6 @@ $(function() {
             new THREE.MeshBasicMaterial( { color: 0x000000, opacity: 0.25, transparent: true, wireframe: true } ) );
 		plane.visible = true;
 		scene.add( plane );
-
-        // console.log("text = " + texture);
 
 		geometry = new THREE.CylinderGeometry( 0, 40, 130, 10, 10 );
 		material =  new THREE.MeshLambertMaterial( { color:0xffffff, shading: THREE.FlatShading, wireframe:false} );
@@ -216,9 +242,6 @@ $(function() {
         currentMesh.geometry.computeBoundingBox();
         console.log(currentMesh);
 
-        console.log("tload2");
-
-
         findScaleToObject();
 
         scene.add( object );
@@ -230,6 +253,15 @@ $(function() {
             verts0.push(object.children[0].geometry.vertices[i]);
 
         loaded = true;
+
+        if (textured == true && meshName != null &&
+            ( (meshName.substring(4,meshName.length-4) == "avahead") ||
+            (meshName.substring(4,meshName.length-4) == "monkey") ||
+            (meshName.substring(4,meshName.length-4) == "bunny") ||
+            (meshName.substring(4,meshName.length-4) == "teapot") ||
+            (meshName.substring(4,meshName.length-4) == "dragon") ) ){
+            alert("It's not possible load texture with this 3D object. Please choose another");
+        }
     }
 
 	function findScaleToObject(){
