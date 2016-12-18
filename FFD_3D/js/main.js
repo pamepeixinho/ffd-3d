@@ -126,7 +126,7 @@ $(function() {
 		$( "#cpSlider" ).slider({
 	            value:3,
 	            min: 2,
-	            max: 4,
+	            max: 8,
 	            step: 1,
 	            slide: function( event, ui ) {
 	                $("#amount").val( ui.value );
@@ -203,14 +203,11 @@ $(function() {
                     }
                     mesh2 = currentMesh;
                 } else if ($(this).accordion('option', 'active') == 1){
+                    // colorpicker_background
                     console.log("1");
                     if (mesh2 == null){
-                        // console.log("1.1");
                         meshName = 'obj/cube.obj';
-                        // loadZ = 0;
                         resetMesh();
-                        // lattice.geometry.verticesNeedUpdate = true;
-                        // deformMesh();
                     } else {
                         console.log("1.2");
                         currentMesh = mesh2;
@@ -218,7 +215,6 @@ $(function() {
                 }
 
                 currentMesh.needsUpdate = true;
-                // alert('Active tab index: ' + $(this).accordion('option', 'active'))
         });
 
     }
@@ -267,7 +263,7 @@ $(function() {
         console.log(loader);
 
 		light1 = new THREE.DirectionalLight( 0xffffff );
-		light1.position.set( 1, 1, 1 );
+		light1.position.set( 10, 10, 10 );
 		scene.add( light1 );
 
 		light2 = new THREE.DirectionalLight( 0x002288 );
@@ -293,11 +289,7 @@ $(function() {
 
         scene.add( object );
 
-        // if (loadZ == true){
         initCPoints(loadZ);
-        // } else{
-        //     initCPoints(0);
-        // }
 
         generateLattice();
 
